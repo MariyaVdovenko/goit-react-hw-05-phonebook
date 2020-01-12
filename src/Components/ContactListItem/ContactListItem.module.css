@@ -19,7 +19,7 @@
   text-transform: uppercase;
   user-select: none;
   margin-left: 20px;
-  transition: background-color 200ms ease-in-out;
+  transition: background-color 201ms ease-in-out;
 }
 
 .Button:hover {
