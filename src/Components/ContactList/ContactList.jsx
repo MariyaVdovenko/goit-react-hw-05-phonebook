@@ -1,47 +1,27 @@
 import React, { Component } from 'react';
 import ContactListItem from '../ContactListItem/ContactListItem';
 import Filter from '../Filter/Filter';
-import T from 'prop-types';
+import { connect } from 'react-redux';
 
-export default class ContactList extends Component {
-  static propTypes = {
-    onDeleteContact: T.func,
-    contacts: T.arrayOf(
-      T.shape({
-        id: T.string.isRequired,
-        name: T.string,
-        number: T.string,
-      }),
-    ),
-  };
-  state = { filter: '' };
-  handleChange = ({ target }) => {
-    const { name, value } = target;
+import contactFormSelectors from '../../Redux/contactFormSelectors';
 
-    this.setState({ [name]: value });
-  };
+class ContactList extends Component {
   render() {
     return (
       <>
-        <Filter handleChange={this.handleChange} />
+        <Filter />
         <ul>
-          {this.props.contacts
-            .filter(contact => {
-              return (
-                contact.name
-                  .toLowerCase()
-                  .indexOf(this.state.filter.toLowerCase()) >= 0
-              );
-            })
-            .map(contact => (
-              <ContactListItem
-                key={contact.id}
-                onDeleteContact={this.props.onDeleteContact}
-                contact={contact}
-              />
-            ))}
+          {this.props.contacts.map(({ id, name, number }) => (
+            <ContactListItem key={id} id={id} />
+          ))}
         </ul>
       </>
     );
   }
 }
+
+const mapStateToProps = (state, props) => ({
+  contacts: contactFormSelectors.getFiltredContacts(state),
+});
+
+export default connect(mapStateToProps)(ContactList);

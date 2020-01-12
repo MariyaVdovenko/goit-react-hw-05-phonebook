@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import styles from './ContactForm.module.css';
+import { connect } from 'react-redux';
 import { NotificationManager } from 'react-notifications';
-import T from 'prop-types';
+import * as contactFormActions from '../../Redux/actions/contactFormActions';
 
-export default class ContactForm extends Component {
-  static propTypes = {
-    onSubmit: T.func,
-  };
-
+class ContactForm extends Component {
   state = {
     name: '',
     number: '',
@@ -26,7 +23,7 @@ export default class ContactForm extends Component {
       return;
     }
 
-    this.props.onSubmit(this.state.name, this.state.number);
+    this.props.onSave(this.state.name, this.state.number);
     this.setState({ number: '', name: '' });
   };
   render() {
@@ -59,3 +56,11 @@ export default class ContactForm extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSave: (name, number) => dispatch(contactFormActions.add(name, number)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ContactForm);
