@@ -18,6 +18,7 @@ const contactFormReducer = (state, { type, payload }) => {
         );
         return state;
       }
+
       return {
         ...state,
         contacts: [...state.contacts, payload.contact],
