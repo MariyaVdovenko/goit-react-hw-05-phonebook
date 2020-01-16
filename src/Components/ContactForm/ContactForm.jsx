@@ -34,14 +34,15 @@ class ContactForm extends Component {
           <input
             className={styles.Input}
             type="text"
-            placeholder="Enter name"
+            placeholder="Enter name(min 3 symb)"
             value={this.state.name}
             name="name"
             onChange={this.handleChange}
+            pattern="[A-Za-z]{3,}"
           />
           <input
             className={styles.Input}
-            type="tel"
+            type="number"
             placeholder="Enter number"
             name="number"
             value={this.state.number}
